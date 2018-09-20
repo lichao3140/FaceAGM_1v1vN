@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="基本信息配置"
+        android:textSize="24px" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/appconfig"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="1:1核验阀值:" />
+
+            <EditText
+                android:id="@+id/ed_onevsonescore"
+                android:layout_width="300px"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="1:N核验阀值:" />
+
+            <EditText
+                android:id="@+id/ed_onevsmorescore"
+                android:layout_width="300px"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="返回待机等待时间:" />
+
+            <EditText
+                android:id="@+id/ed_waithome"
+                android:layout_width="300px"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="秒"
+                android:textColor="#e64f4f" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="开门延时时间:" />
+
+            <EditText
+                android:id="@+id/ed_closedoor"
+                android:layout_width="300px"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="秒"
+                android:textColor="#e64f4f" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="本机静态IP:" />
+
+            <EditText
+                android:id="@+id/ed_localhost"
+                android:layout_width="300px"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="秒"
+                android:textColor="#e64f4f" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/cb_live"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是否开启活体检测" />
+
+
+            <CheckBox
+                android:id="@+id/cb_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:text="是否开启语音播报" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30px"
+        android:text="FaceVMS"
+        android:textSize="24px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/appconfig"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="IP地址:" />
+
+            <EditText
+                android:id="@+id/ed_vmsip"
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+               />
+
+            <TextView
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="端口号:" />
+
+            <EditText
+                android:id="@+id/ed_vmsport"
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="设备编号:" />
+
+            <EditText
+                android:id="@+id/ed_vmsusername"
+                android:layout_width="200px"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="验证口令:" />
+
+            <EditText
+                android:id="@+id/ed_vmspassword"
+                android:layout_width="200px"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_marginTop="30px">
+
+        <Button
+            android:id="@+id/btn_updateAppConfig"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="确定修改" />
+
+    </LinearLayout>
+</LinearLayout>

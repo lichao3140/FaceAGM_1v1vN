@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fcfbfb"
+    android:orientation="vertical">
+
+    <TextView
+        android:textColor="#000"
+        android:gravity="center"
+        android:textSize="30px"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:text="登录设置"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textColor="#000"
+            android:layout_width="300px"
+            android:gravity="center_vertical|right"
+            android:text="数据管理平台IP:"
+            android:paddingRight="50px"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/alert_ip"
+            android:textColor="#000"
+            android:gravity="center_vertical|left"
+            android:layout_width="300px"
+            android:text=""
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:paddingRight="50px"
+            android:textColor="#000"
+            android:layout_width="300px"
+            android:gravity="center_vertical|right"
+            android:text="数据管理平台端口:"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/alert_port"
+            android:textColor="#000"
+            android:gravity="center_vertical|left"
+            android:layout_width="300px"
+            android:text="32109"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:paddingRight="50px"
+            android:textColor="#000"
+            android:layout_width="300px"
+            android:gravity="center_vertical|right"
+            android:text="设备编号:"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/alert_username"
+            android:textColor="#000"
+            android:gravity="center_vertical|left"
+            android:layout_width="300px"
+
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:paddingRight="50px"
+            android:textColor="#000"
+            android:layout_width="300px"
+            android:gravity="center_vertical|right"
+            android:text="验证口令:"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/alert_pass"
+            android:textColor="#000"
+            android:gravity="center_vertical|left"
+            android:layout_width="300px"
+            android:inputType="numberPassword"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/alert_close"
+            android:background="@drawable/alert_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="#000" />
+
+        <Button
+            android:layout_marginLeft="10dp"
+            android:id="@+id/alert_open"
+            android:background="@drawable/alert_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="设置"
+            android:textColor="#000" />
+    </LinearLayout>
+
+
+</LinearLayout>

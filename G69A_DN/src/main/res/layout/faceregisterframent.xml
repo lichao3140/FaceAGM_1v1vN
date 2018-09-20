@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px">
+
+        <Button
+            android:id="@+id/btn_openPhone"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_weight="1"
+            android:background="#ccc"
+            android:text="开始抓拍" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/reg_chooseOneImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30px"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="640px"
+            android:layout_height="480px">
+
+            <com.runvision.myview.MyCameraSuf
+                android:id="@+id/reg_myCameraSuf"
+                android:layout_width="640px"
+                android:layout_height="480px" />
+        </FrameLayout>
+
+        <include
+            android:id="@+id/view_userInfo"
+            layout="@layout/templaterdetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

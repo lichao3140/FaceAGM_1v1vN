@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px">
+
+        <Button
+            android:layout_marginLeft="10px"
+            android:background="#ccc"
+            android:id="@+id/btn_openPhone"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="10px"
+            android:text="开始抓拍" />
+
+        <Button
+            android:layout_marginRight="10px"
+            android:layout_marginLeft="10px"
+            android:background="#ccc"
+            android:id="@+id/btn_startImport"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="批量导入" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/reg_chooseOneImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30px"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="384px"
+            android:layout_height="512px">
+
+            <com.runvision.myview.MyCameraSuf
+                android:id="@+id/reg_myCameraSuf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+
+                    android:id="@+id/choose_bitmap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="427px"
+                    android:layout_height="70px"
+                    android:gravity="center_vertical|left">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓 名:" />
+
+                    <EditText
+                        android:id="@+id/reg_name"
+                        android:layout_width="200px"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="427px"
+                    android:layout_height="70px"
+                    android:gravity="center_vertical|left">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工号:" />
+
+                    <EditText
+                        android:digits="@string/filter_vcode"
+                        android:id="@+id/reg_phone"
+                        android:layout_width="200px"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="427px"
+                    android:layout_height="70px"
+                    android:gravity="center_vertical|left">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="类型:" />
+
+
+                    <Spinner
+                        android:id="@+id/reg_type"
+                        android:layout_width="200px"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/user_type"
+                        android:gravity="center">
+
+                    </Spinner>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="427px"
+            android:layout_height="70px"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/reg_addFace"
+                android:layout_width="150px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="添加" />
+
+            <Button
+                android:id="@+id/reg_close"
+                android:layout_width="150px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="返回比对页面" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

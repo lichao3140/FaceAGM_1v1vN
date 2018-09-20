@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.runvision.faceagm_1v1vn.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/index"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.runvision.myview.MyCameraSuf
+            android:id="@+id/myCameraView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg">
+
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/goRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5px"
+        android:layout_marginTop="5px"
+        android:src="@mipmap/reg" />
+
+    <ImageView
+        android:id="@+id/goSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-5px"
+        android:layout_marginTop="70px"
+        android:src="@mipmap/setting" />
+
+    <include
+        android:id="@+id/pro"
+        layout="@layout/pro_xml"
+        android:visibility="gone"></include>
+
+    <include
+        android:id="@+id/alert_xml"
+        layout="@layout/showcomperresult"
+        android:visibility="gone"></include>
+
+    <include
+        android:id="@+id/onevsmore"
+        layout="@layout/onevsmorediaolog"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/ts_xml"
+        layout="@layout/nofacetemplate"
+        android:visibility="gone"></include>
+</RelativeLayout>
