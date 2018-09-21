@@ -23,57 +23,51 @@
         android:layout_height="match_parent"
         android:background="@mipmap/bg">
 
-
         <TextView
             android:id="@+id/version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:textColor="@color/white" />
-
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/socket_status"
-        android:layout_width="10px"
-        android:layout_height="10px"
-        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/x4"
+        android:layout_height="@dimen/y5"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/socket_false" />
 
     <ImageView
         android:id="@+id/goRegisterActivity"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="48px"
-        android:layout_height="48px"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@mipmap/reg"/>
-
-
 
     <TextView
         android:id="@+id/showHttpUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textColor="@color/colorAccent"
         android:textSize="20px" />
 
     <include
         android:id="@+id/pro"
         layout="@layout/pro_xml"
-        android:visibility="gone"></include>
+        android:visibility="gone" />
 
     <include
         android:id="@+id/alert_xml"
         layout="@layout/showcomperresult"
-        android:visibility="gone"></include>
-
+        android:visibility="gone" />
 
     <include
         android:id="@+id/onevsmore"
@@ -83,5 +77,5 @@
     <include
         android:id="@+id/ts_xml"
         layout="@layout/nofacetemplate"
-        android:visibility="gone"></include>
+        android:visibility="gone" />
 </RelativeLayout>

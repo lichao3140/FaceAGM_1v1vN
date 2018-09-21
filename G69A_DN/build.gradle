@@ -29,21 +29,6 @@ android {
         // 防止在发布的时候出现因MissingTranslation导致Build Failed!
         disable 'MissingTranslation'
     }
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def oldFile = output.outputFile
-//            def newName = "G69A_DN_V" + defaultConfig.versionName + "_" + new Date().format("yyyyMMdd") + "_vms_" + buildType.name + ".apk"
-//            output.outputFile = new File(oldFile.parent, "sulin.apk")
-//        }
-//    }
-//    android.applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            output.outputFile = new File(output.outputFile.parent,
-//                    defaultConfig.applicationId + "-" + buildType.name + "-v" +
-//                            defaultConfig.versionName + "-" + variant.productFlavors.name + "-" + defaultConfig.versionCode +
-//                            ".apk");
-//        }
-//    }
 
     //配置自定义打包名称
     applicationVariants.all { variant ->

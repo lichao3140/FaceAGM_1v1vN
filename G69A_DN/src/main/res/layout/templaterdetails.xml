@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,17 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginStart="@dimen/x29"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="200px"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_width="@dimen/x83"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/choose_bitmap"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/snap"/>
 
         </LinearLayout>
 
@@ -26,106 +28,120 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/x5"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="440px"
-                android:layout_height="70px"
-                android:gravity="center_vertical|left">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y33"
+                android:layout_marginLeft="@dimen/x5"
+                android:gravity="center_vertical|left"
+                tools:ignore="RtlHardcoded">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="姓名:" />
+                    android:text="@string/register_name"
+                    android:textSize="@dimen/x11"
+                    android:textColor="@color/dimgray"/>
 
                 <EditText
                     android:id="@+id/reg_name"
-                    android:layout_width="150px"
+                    android:layout_width="@dimen/x135"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="年龄:" />
+                    android:layout_marginLeft="@dimen/x5"
+                    android:text="@string/register_age"
+                    android:textSize="@dimen/x11"
+                    android:textColor="@color/dimgray"/>
 
                 <EditText
                     android:id="@+id/reg_age"
-                    android:layout_width="150px"
+                    android:layout_width="@dimen/x63"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
 
             </LinearLayout>
 
-
             <LinearLayout
-                android:layout_width="427px"
-                android:layout_height="70px"
-                android:gravity="center_vertical|left">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y33"
+                android:layout_marginLeft="@dimen/x5"
+                android:gravity="center_vertical|left"
+                tools:ignore="RtlHardcoded">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="工号:" />
-
-                <EditText
-                    android:id="@+id/reg_phone"
-                    android:layout_width="150px"
-                    android:layout_height="wrap_content"
-                    android:digits="@string/filter_vcode" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="证件号:" />
+                    android:text="@string/register_id"
+                    android:textSize="@dimen/x11"
+                    android:textColor="@color/dimgray"/>
 
                 <EditText
                     android:id="@+id/cardNo"
-                    android:layout_width="200px"
+                    android:layout_width="@dimen/x135"
                     android:layout_height="wrap_content"
                     android:digits="@string/filter_cardNo" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_number"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:textSize="@dimen/x11"
+                    android:textColor="@color/dimgray"/>
+
+                <EditText
+                    android:id="@+id/reg_phone"
+                    android:layout_width="@dimen/x63"
+                    android:layout_height="wrap_content"
+                    android:digits="@string/filter_vcode" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:layout_width="427px"
-                android:layout_height="70px"
-                android:gravity="center_vertical|left">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y33"
+                android:gravity="center_vertical|left"
+                android:layout_marginLeft="@dimen/x5"
+                tools:ignore="RtlHardcoded">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="类型:" />
+                    android:text="@string/register_type"
+                    android:textSize="@dimen/x11"
+                    android:textColor="@color/dimgray"/>
 
                 <Spinner
                     android:id="@+id/reg_type"
-                    android:layout_width="150px"
+                    android:layout_width="@dimen/x135"
                     android:layout_height="wrap_content"
                     android:entries="@array/user_type"
                     android:gravity="center">
-
                 </Spinner>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="性别:" />
+                    android:text="@string/register_sex"
+                    android:textSize="@dimen/x11"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:textColor="@color/dimgray"/>
 
                 <Spinner
                     android:id="@+id/reg_sex"
-                    android:layout_width="150px"
+                    android:layout_width="@dimen/x63"
                     android:layout_height="wrap_content"
                     android:entries="@array/user_sex"
                     android:gravity="center">
-
                 </Spinner>
-
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -135,17 +151,17 @@
 
         <Button
             android:id="@+id/reg_addFace"
-            android:layout_width="200px"
+            android:layout_width="@dimen/x84"
             android:layout_height="match_parent"
-
-            android:text="确定" />
+            android:textSize="@dimen/x11"
+            android:text="@string/register_add_template" />
 
         <Button
             android:id="@+id/reg_close"
-            android:layout_width="200px"
+            android:layout_width="@dimen/x84"
             android:layout_height="match_parent"
-
-            android:text="返回" />
+            android:textSize="@dimen/x11"
+            android:text="@string/register_back" />
     </LinearLayout>
 
 </LinearLayout>
