@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -11,7 +12,6 @@
         android:layout_gravity="center"
         android:text="基本信息配置"
         android:textSize="24px" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,12 +120,25 @@
                 android:layout_width="300px"
                 android:layout_height="match_parent" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="200px"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="秒"
-                android:textColor="#e64f4f" />
+                android:gravity="center_vertical|right"
+                android:text="保存数据："/>
+
+            <Spinner
+                android:id="@+id/Preservation_time"
+                android:layout_width="300px"
+                android:layout_height="wrap_content"
+                android:entries="@array/user_time"
+                android:gravity="center"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -145,6 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30px"
+                android:visibility="gone"
                 android:text="是否开启语音播报" />
 
         </LinearLayout>
@@ -229,13 +243,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100px"
-        android:layout_marginTop="30px">
+        android:layout_marginTop="30px"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_updateAppConfig"
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:text="确定修改" />
+            android:id="@+id/btn_Refresh"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="重置"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btn_Sure"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="确定修改"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 </LinearLayout>

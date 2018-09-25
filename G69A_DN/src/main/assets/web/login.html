@@ -11,15 +11,14 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
 
-    <!--
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        -->
     <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
     <link rel="stylesheet" type="text/css" href="../css/default.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <script src="../js/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="../css/sweet-alert.css">
     <script src="../js/sweet-alert.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <script src="../js/app.js"></script>
 </head>
 
 <body>
@@ -28,7 +27,6 @@
         <h1>
             人脸识别管理系统<br/>
         </h1>
-        <!-- <h1><span style="">Runvision</span></h1> -->
     </div>
     <div class="wrapper">
         <div class="container">
@@ -38,9 +36,12 @@
             <form id="loginform" class="form">
                 <input type="text" placeholder="用户名" name="username" id="username"
                        AUTOCOMPLETE="off" value="admin"/>
-                <input type="password" placeholder="密码" name="password" id="password"
-                       AUTOCOMPLETE="off" value="admin"/>
-                <button type="button" id="login-button">登录</button>
+                <input type="password" placeholder="密码"  name="password" id="password"
+                       AUTOCOMPLETE="off" value="123456"/>
+                <input type="text" placeholder="IP" name="password" id="agmip"
+                       AUTOCOMPLETE="off" value="192.168.1.12" style="display:none;"/>
+                <button type="button" id="login-button" onclick="login()">登录</button>
+                <button style="margin-top:10px;" type="button" id="setid" onclick="showIP();">重置IP</button>
             </form>
         </div>
         <ul class="bg-bubbles">
@@ -63,12 +64,12 @@
 <script>
 $(function(){	
 
- 			document.onkeydown=function(event){
-                var e = event || window.event || arguments.callee.caller.arguments[0];
-                if(e && e.keyCode==13){ // enter 键
-                    $("#login-button").click();
-                }
-            };
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            $("#login-button").click();
+        }
+    };
 
 
 	 if (document.cookie.length>0){
@@ -93,25 +94,51 @@ $(function(){
              }
         }
      }
-
 });
+function showIP(){
+    $("#agmip").css("display","block");
+    $("#username").css("display","none");
+    $("#password").css("display","none");
+    $("#setid").css("display","none");
+    $(".loginlabel").html("IP重置");
+    $("#login-button").html("确定");
+    $("#login-button").attr("onclick","setIP()");
+}
+function setIP(){
+    var ips=$("#agmip").val();
+    if(ips!=""){
+        swal("成功","请重新访问页面","success");
+        $.ajax({
+            url: 'updatedeviceip',
+            type: 'post',
+            dataType: 'json',
+            timeout : 3000,
+            data:{updatedeviceip: ips},
+            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+            success: function (data) {
+
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+}
 
     function show(){
         $('.loginlabel').html('用户登录');
         $('.wrapper').removeClass('form-success');
         $('form').fadeIn(500);
     }
-    $('#login-button').click(function (event) {
 
-
-        event.preventDefault();
+    function login(){
         $('form').fadeOut(500);
         $('.wrapper').addClass('form-success');
         $('.loginlabel').html('Loging...');
         var ip=location.hostname+location.port;
         var username=$("#username").val();
         var password=$("#password").val();
-        
+
         if(username!="" && password!=""){
             $.ajax({
                 url: 'adminLogin',
@@ -127,11 +154,11 @@ $(function(){
                         exp.setTime(exp.getTime() + 7 * 24 * 60 * 60 * 1000);
                         document.cookie = 'VMS_LoginName=' + data.data.username + ';expires=' + exp.toGMTString();
                         var num = 3;
-                        setInterval(function () {
+                        setInterval(function(){
                             $('.loginlabel').html('登录成功,<span style="color:black;">' + num + '</span>秒后跳转...');
                             num--;
                             if (num == 0) {
-                            	window.clearInterval(this);
+                                window.clearInterval(this);
                                 window.location.href = "index.html";
                             }
                         }, 1000);
@@ -142,8 +169,8 @@ $(function(){
                     }
                 },
                 error: function (data) {
-                	swal("错误", "服务器连接失败", "error");
-                	window.setTimeout('show()', 1000);
+                    swal("错误", "服务器连接失败", "error");
+                    window.setTimeout('show()', 1000);
                 }
             });
         }
@@ -151,12 +178,7 @@ $(function(){
             $('.loginlabel').html('请输入用户名、密码');
             window.setTimeout('show()', 2000);
         }
-
-    });
-
-
-
-
+    }
 </script>
 </body>
 </html>

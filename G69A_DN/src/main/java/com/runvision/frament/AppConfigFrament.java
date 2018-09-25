@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.runvision.core.Const;
@@ -23,8 +25,9 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
     private View view;
     private EditText onevsonescore, onevsmorescore, waithome, closedoor, vmsip, vmsport, vmsusername, vmspassword, lochost;
     private CheckBox live, music;
-    private Button update;
-
+    private Button btn_Sure, btn_Refresh;
+    private Spinner Preservation_time;
+    private int preservation_day;
 
     @Nullable
     @Override
@@ -76,6 +79,13 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
         //lochost
         lochost.setText(NetUtils.getIpAddress(mContext) == null ? "" : NetUtils.getIpAddress(mContext));
 
+        if(SPUtil.getInt(Const.KEY_PRESERVATION_DAY,90)==90) {
+            Preservation_time.setSelection(0);
+        } else if(SPUtil.getInt(Const.KEY_PRESERVATION_DAY,90)==60) {
+            Preservation_time.setSelection(1);
+        } else if(SPUtil.getInt(Const.KEY_PRESERVATION_DAY,90)==30) {
+            Preservation_time.setSelection(2);
+        }
     }
 
     private void initView() {
@@ -90,19 +100,40 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
         vmspassword = view.findViewById(R.id.ed_vmspassword);
         live = view.findViewById(R.id.cb_live);
         music = view.findViewById(R.id.cb_music);
-        update = view.findViewById(R.id.btn_updateAppConfig);
-        update.setOnClickListener(this);
+        btn_Sure=(Button)view.findViewById(R.id.btn_Sure);
+        btn_Sure.setOnClickListener(this);
+
+        btn_Refresh=(Button)view.findViewById(R.id.btn_Refresh);
+        btn_Refresh.setOnClickListener(this);
+
+        Preservation_time = (Spinner) view.findViewById(R.id.Preservation_time);
+        Preservation_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String sexNumber = AppConfigFrament.this.getResources().getStringArray(R.array.user_time)[i];
+                System.out.println(sexNumber);
+                if(sexNumber.equals("90天"))
+                {
+                    preservation_day=90;
+                }else if(sexNumber.equals("60天"))
+                {
+                    preservation_day=60;
+                }
+                else if(sexNumber.equals("30天"))
+                {
+                    preservation_day=30;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            initData();
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
+    private void setData() {
         //修改人证分数
         String oneVsOneScore = onevsonescore.getText().toString().trim();
         if (!"".equals(oneVsOneScore) && Integer.parseInt(oneVsOneScore) != SPUtil.getInt(Const.KEY_CARDSCORE, Const.FACE_SCORE)) {
@@ -119,7 +150,6 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
             SPUtil.putInt(Const.KEY_BACKHOME, Integer.parseInt(waitStr));
         }
         //修改开门延时时间
-
         String colseDoorStr = closedoor.getText().toString().trim();
         if (!"".equals(colseDoorStr) && Integer.parseInt(colseDoorStr) != 0 && Integer.parseInt(colseDoorStr) != SPUtil.getInt(Const.KEY_OPENDOOR, Const.CLOSE_DOOR_TIME)) {
             SPUtil.putInt(Const.KEY_OPENDOOR, Integer.parseInt(colseDoorStr));
@@ -167,9 +197,7 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                     Toast.makeText(mContext, "修改本机IP成功", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(mContext, "IP不合法", Toast.LENGTH_SHORT).show();
                     System.out.println("IP不合法");
@@ -179,6 +207,29 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
             Toast.makeText(mContext, "修改成功", Toast.LENGTH_SHORT).show();
         }
 
+        // 修改保存数据天数
+        SPUtil.putInt(Const.KEY_PRESERVATION_DAY, preservation_day);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            initData();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_Sure: // 确认修改
+                setData();
+                break;
+            case R.id.btn_Refresh: //重置
+                initData();
+                break;
+            default:
+                break;
+        }
     }
 
 

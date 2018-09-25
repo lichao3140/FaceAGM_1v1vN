@@ -146,7 +146,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     oneVsMoreView.setVisibility(View.GONE);
                     handler.removeCallbacks(closeTsRunnable);
                     ts_xml.setVisibility(View.GONE);
-
                     break;
 
                 case Const.CLOSE_HOME:
@@ -157,8 +156,8 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                         pro_xml.setVisibility(View.GONE);
                         ListenOperation.cleanTime();
                     }
-
                     break;
+
                 case Const.RED_INFRA:
                     LogToFile.e("MainActivity", "收到红外感应的信息");
                     mCameraSurfView.openCamera();
@@ -168,12 +167,11 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                     home.setVisibility(View.GONE);
                     index.setVisibility(View.VISIBLE);
                     ListenOperation.cleanTime();
-//
                     break;
+
                 case Const.READ_CARD:
                     pro_xml.setVisibility(View.VISIBLE);
                     playMusic(R.raw.lookcamera);
@@ -185,6 +183,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                         showOneVSMore();
                     }
                     break;
+
                 case Const.SOCKET_LOGIN:
                     boolean isSuccess = (boolean) msg.obj;
                     if (isSuccess) {
@@ -204,16 +203,19 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                         Toast.makeText(mContext, "socket登录失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
+
                 case Const.SOCKET_TIMEOUT:
                     socket_status.setBackgroundResource(R.drawable.socket_false);
                     String prompt = (String) msg.obj;
                     LogToFile.i("MainActivity", prompt);
                     Toast.makeText(mContext, prompt, Toast.LENGTH_SHORT).show();
                     break;
+
                 case Const.SOCKET_DIDCONNECT:
                     socket_status.setBackgroundResource(R.drawable.socket_false);
                     closeSocket();
                     break;
+
                 case Const.SOCKET_SEND_TEMPTER:
                     if (receiver != null) {
                         unregisterReceiver(receiver);
@@ -245,15 +247,18 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     ts_xml_msg.setText("模版导入中");
                     ts_xml.setVisibility(View.VISIBLE);
                     break;
+
                 case Const.SOCKRT_SENDIMAGE:
                     batchImport();
                     break;
+
                 case Const.WEB_UPDATE:
                     if (!SPUtil.getString(Const.KEY_VMSIP, "").equals("") && SPUtil.getInt(Const.KEY_VMSPROT, 0) != 0 && !SPUtil.getString(Const.KEY_VMSUSERNAME, "").equals("") && !SPUtil.getString(Const.KEY_VMSPASSWORD, "").equals("")) {
                         //开启socket线程
                         socketReconnect(SPUtil.getString(Const.KEY_VMSIP, ""), SPUtil.getInt(Const.KEY_VMSPROT, 0));
                     }
                     break;
+
                 case 101:
                     int success1 = (int) msg.obj;
                     bacthOk1 = success1;
@@ -266,6 +271,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                         vmsInertTempterOk();
                     }
                     break;
+
                 case 102:
                     int success2 = (int) msg.obj;
                     bacthOk2 = success2;
@@ -276,9 +282,9 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     if (bacthOk1 + bacthOk2 + bacthOk3 == mSum) {
                         batchDialog.dismiss();
                         vmsInertTempterOk();
-
                     }
                     break;
+
                 case 103:
                     int success3 = (int) msg.obj;
                     bacthOk3 = success3;
@@ -291,6 +297,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                         vmsInertTempterOk();
                     }
                     break;
+
                 case Const.WEB_BATCHIMAGE_FALSE:
                     ts_xml_msg.setText("请刷身份证");
                     ts_xml.setVisibility(View.GONE);
@@ -298,6 +305,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     onResume();
                     openNetStatusReceiver();
                     break;
+
                 case Const.WEB_BATCHIMAGE_TRUE:
                     onPause();
                     flag = true;
@@ -306,6 +314,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     ts_xml_msg.setText("模版导入中");
                     ts_xml.setVisibility(View.VISIBLE);
                     break;
+
                 case Const.WEB_UPDATE_IP:
                     ConversionHelp.updateIp(SPUtil.getString(Const.KEY_IP, ""), mContext);
                     handler.postDelayed(new Runnable() {
@@ -315,8 +324,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                             openHttpServer();
                         }
                     }, 3000);
-
-
                     break;
                 default:
                     break;
@@ -748,6 +755,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
 
     @Override
     protected void onResume() {
+        super.onResume();
         super.onStart();
 
         openNetStatusReceiver();

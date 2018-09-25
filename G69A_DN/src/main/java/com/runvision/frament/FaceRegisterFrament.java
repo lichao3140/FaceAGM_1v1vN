@@ -1,16 +1,9 @@
 package com.runvision.frament;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -24,11 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.face.sv.FaceInfo;
 import com.runvision.bean.AppData;
 import com.runvision.core.Const;
@@ -36,22 +26,11 @@ import com.runvision.core.FaceIDCardCompareLib;
 import com.runvision.core.MyApplication;
 import com.runvision.db.User;
 import com.runvision.faceagm_1v1vn.R;
-
 import com.runvision.myview.MyCameraSuf;
-import com.runvision.thread.BatchImport;
-import com.runvision.thread.OneVSMoreTask;
 import com.runvision.util.DateTimeUtils;
 import com.runvision.util.FileUtils;
 import com.runvision.util.IDUtils;
 import com.squareup.leakcanary.RefWatcher;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLOutput;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +41,7 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
     private View view;
     private Context mContext;
     private String TAG = this.getClass().getSimpleName();
-    private Button btn_openCamera, addFace, btn_startImport, btn_close;
+    private Button btn_openCamera, addFace, btn_close;
     private ImageView imageView;
     private LinearLayout reg_chooseOneImage;
     private EditText name, workNo, cardNo, age;
@@ -73,13 +52,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
     private Bitmap reg_bmp = null;
     private String choose_type;
     private String choose_sex;
-    private View userInfoView;
-
-    private Dialog ConfirmDialog;
-    private ProgressBar progesss1, progesss2, progesss3;
-    private TextView progesssValue1, progesssValue2, progesssValue3;
-    private Dialog batchDialog;
-
 
     @Nullable
     @Override
@@ -93,14 +65,11 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
         return view;
     }
 
-
     private void initView() {
         btn_openCamera = (Button) view.findViewById(R.id.btn_openPhone);
         btn_openCamera.setOnClickListener(this);
         imageView = (ImageView) view.findViewById(R.id.choose_bitmap);
-
         reg_chooseOneImage = (LinearLayout) view.findViewById(R.id.reg_chooseOneImage);
-
 
         name = view.findViewById(R.id.reg_name);
         workNo = view.findViewById(R.id.reg_phone);
@@ -185,9 +154,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
     }
 
 
-
-
-
     private void openCamera() {
         if (!Const.is_regFace) {
             Const.is_regFace = true;
@@ -200,7 +166,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
         }
 
     }
-
 
     private Handler handler = new Handler() {
         @Override
@@ -221,8 +186,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
 
         }
     };
-
-
 
 
     public void updateView() {
@@ -307,7 +270,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
             return;
         }
     }
-
 
     @Override
     public void onDestroy() {

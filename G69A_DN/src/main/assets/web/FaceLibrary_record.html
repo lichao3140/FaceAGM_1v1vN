@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/jquery-2.1.1.min.js"></script>
-    <link rel="stylesheet" href="css/amazeui.datetimepicker.css" type="text/css"></link>
+    <link rel="stylesheet" href="../css/amazeui.datetimepicker.css" type="text/css"></link>
     <script type="text/javascript" src="../js/amazeui.datetimepicker.min.js"></script>
     <script type="text/javascript" src="../js/locales/amazeui.datetimepicker.zh-CN.js"
             charset="UTF-8"></script>
@@ -582,9 +582,9 @@
                                         "<td style='cursor:hand;width:180px;' class='faclibtd' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+ data.data[i].name+ "</td>"+
                                         "<td style='cursor:hand;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+ data.data[i].type+ "</td>"+
                                         "<td style='cursor:hand;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+ data.data[i].sex+ "</td>"+
-                                        "<td style='cursor:hand;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+data.data[i].age+"</td>"+
+                                        "<td style='cursor:hand;width:180px;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+data.data[i].cardNo+"</td>"+                                        
                                         "<td style='cursor:hand;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+data.data[i].wordNo+"</td>"+
-                                        "<td style='cursor:hand;width:180px;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+data.data[i].cardNo+"</td>"+
+                                        "<td style='cursor:hand;' onclick='getFrameContent(0,this,"+data.data[i].id+")'>"+data.data[i].age+"</td>"+
                                         "</tr>");
                                 }
                             }
@@ -756,6 +756,11 @@
 
         /* } */
     }
+    
+    /* 关闭批量导入面板 */
+    function closemodel(){
+    	$("#my-prompt3").modal('close');
+    }
 
     function loadmodel(){
     		var pgone=document.getElementById("pg");
@@ -764,7 +769,10 @@
 
 	        //从文件名中获取的身份证号码
 	        var modelcardid=[];
-
+            //模板类型
+            var modeltype=[];
+            //工号
+            var gonghao=[];
     	 	//获取文件
             var filees = $("#imgfiles")[0].files[completenum];
             console.info(filees.type);
@@ -775,12 +783,23 @@
                     filenamemap.push(filees.name.substr(0,filees.name.length-4));
                     //从文件名中获取的身份证号码
                     modelcardid.push(filees.name.substr(0,filees.name.length-4));
+                    gonghao.push(filees.name.substr(0,filees.name.length-4));
+                    modeltype.push(parseInt("0"));
+
                 }else{
                     var filecn = filees.name.split("_");
-                    //文件名
-                    filenamemap.push(filecn[1].substr(0,filecn[1].length-4));
+                    if(filecn.length<4){
+                        swal("警告","请以正确的格式命名文件！(证件号_姓名_模板类型_工号)","warning");
+                        return;
+                    }
+                    //人脸对象名
+                    filenamemap.push(filecn[1]);
                     //从文件名中获取的身份证号码
                     modelcardid.push(filecn[0]);
+                    //模板类型
+                    modeltype.push(filecn[2]);
+                    //工号
+                    gonghao.push(filecn[3].substr(0,filecn[3].length-4));
                 }
 					//创建读取文件的对象
 	                var reader = new FileReader();
@@ -795,9 +814,9 @@
 	                         timeout : 50000,
 	                            dataType:'json',
 	                            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-	                            data:{name:filenamemap[0], type:$("#addff_type").val(),
-	                                  sex:$("#addff_sex").val(), age:'0',
-	                            	  workNo:'',
+	                            data:{name:filenamemap[0], type:parseInt(modeltype[0]),
+	                                  sex:0, age:'0',
+	                            	  workNo:gonghao[0],
 	                                 cardNo:modelcardid[0], img:imgFile.substr(23),
 	                                 currentIndex:completenum+1,numSize:jpgcount
 	                          },
@@ -942,10 +961,9 @@
                                         <th style="width:180px;">名称</th>
                                         <th>类型</th>
                                         <th>性别</th>
-                                        <th>年龄</th>
-
+										<th style="width:180px;">证件号</th>
                                         <th>工号</th>
-                                        <th style="width:180px;">证件号</th>
+                                        <th>年龄</th>
                                     </tr>
                                     </thead>
                                     <tbody id="factbody">
@@ -1043,7 +1061,7 @@
                                 <option value="0">未知</option>
                                 <option value="1">黑名单</option>
                                 <option value="56">白名单</option>
-                                <option value="156">顾客</option>
+                                <option value="112">顾客</option>
                                 <option value="113">业主</option>
                                 <option value="114">访客</option>
                             </select></td>
@@ -1211,36 +1229,12 @@
                 <div style="text-align: left;">
                     <form id="imgfile">
                         <table style="width:100%;">
-                            <tr>
-                                <td style="text-align:right;">统一对象类型：</td>
-                                <td>
-                                    <select id="batchtype"
-                                            style="outline:none;border-radius:3px;width:200px;height:32px;font-family: '微软雅黑';font-size:14px;">
-                                        <option style="height:32px;" value="0">未知</option>
-                                        <option style="height:32px;" value="1">黑名单</option>
-                                        <option style="height:32px;" value="56">白名单</option>
-                                        <option style="height:32px;" value="112">顾客</option>
-                                        <option style="height:32px;" value="113">业主</option>
-                                        <option style="height:32px;" value="114">访客</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:right;">统一对象性别：</td>
-                                <td>
-                                    <select id="batchgender"
-                                            style="outline:none;border-radius:3px;width:200px;height:32px;font-family: '微软雅黑';font-size:14px;">
-                                        <option value="0">未知</option>
-                                        <option value="1">男</option>
-                                        <option value="2">女</option>
-                                    </select>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td colspan="2" style="text-align:center;">
                                     <progress id="pg" style="margin-top:10px;"></progress>
                                     <span id="pgbarcount"
-                                          style="display: block;position:absolute;width: 348px;height: 27px;top:122px;"><label
+                                          style="display: block;position:absolute;width: 348px;height: 27px;top:60px;"><label
                                             id="now"></label> / <label
                                             id="all"></label></span><input
                                         type="button"
@@ -1251,7 +1245,7 @@
                                            value="选择目录" onclick="$('#imgfiles').click();"/><input
                                         type="file" style="display:none;" id="imgfiles"
                                         accept="image/jpeg,image/jpg" onchange="filechange()"
-                                        webkitdirectory directory>
+                                        webkitdirectory>
                                 </td>
                             </tr>
 
@@ -1266,9 +1260,10 @@
                             <tbody id="dissbody">
 
                             </tbody>
-
+                            <tr>
+                            	<td colspan="2"><input style="background-color:red;border-radius:5px;color:white;width:80px;cursor:hand;text-align:center;height:25px;" value="关闭面板" onclick="closemodel()"></td>
+                            </tr>
                         </table>
-
                     </form>
                 </div>
             </div>

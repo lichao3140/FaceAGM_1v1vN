@@ -34,7 +34,7 @@
     </string-array>
 
     <string name="filter_vcode">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="filter_cardNo">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="filter_cardNo">0123456789xX</string>
 
     <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>

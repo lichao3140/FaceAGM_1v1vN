@@ -105,6 +105,7 @@ public class Const {
     public static final String KEY_VMSUSERNAME = "vmsUserName";
     public static final String KEY_VMSPASSWORD = "vmsPassWord";
     public static final String KEY_IP = "IP";
+    public static final String KEY_PRESERVATION_DAY = "preservation_day";
     /**
      * 消息传递的标志
      */
