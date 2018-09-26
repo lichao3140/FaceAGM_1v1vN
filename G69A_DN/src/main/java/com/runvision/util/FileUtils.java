@@ -17,6 +17,7 @@ import java.util.List;
  */
 
 public class FileUtils {
+
     public static void deleteTempter(String imageID, String path) {
         String sdCardDir = Environment.getExternalStorageDirectory() + "/FaceAndroid/" + path + "/" + imageID + ".jpg";
         File file = new File(sdCardDir);
@@ -25,6 +26,13 @@ public class FileUtils {
         }
     }
 
+    public static void deleteTempter(String imageID) {
+        String sdCardDir = imageID + ".jpg";
+        File file=new File(sdCardDir);
+        if(file.exists()){
+            file.delete();
+        }
+    }
 
     public static File saveFile(Bitmap btImage, String fileName, String DirName) {
         if(btImage==null){

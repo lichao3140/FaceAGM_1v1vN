@@ -206,6 +206,35 @@ public class FaceProvider {
         return list;
     }
 
+    public List<User> getAllPoints() {
+
+        List<User> list = null;
+        String sql = "select * from tRecord";
+        if (null != faceHelper) {
+            SQLiteDatabase db = faceHelper.getWritableDatabase();
+            if (null != db) {
+                Cursor cursor = db.rawQuery(sql, null);
+                if (null != cursor && cursor.getCount() > 0) {
+                    Log.i("zhuhuilong","cursor："+cursor.getCount());
+                    list = new ArrayList<User>();
+                    User user = null;
+                    while (cursor.moveToNext()) {
+                        user = new User();
+                        user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                        user.setTime(cursor.getLong(cursor.getColumnIndex("createTime")));
+                        list.add(user);
+                        Log.i("zhuhuilong","数据库数据："+cursor.getColumnIndex("id"));
+                        Log.i("zhuhuilong","数据库数据："+cursor.getColumnIndex("createTime"));
+
+                    }
+                    cursor.close();
+                }
+            }
+
+        }
+        return list;
+    }
+
     /**
      * 查询管理员是否存在
      *

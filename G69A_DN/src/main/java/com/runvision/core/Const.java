@@ -142,6 +142,9 @@ public class Const {
     //vms 开始下发模版
     public static final int SOCKET_SEND_TEMPTER=17;
 
+    //删除过期记录
+    public static final int UPDATE_DATA = 18;
+
     //socket协议发送消息类型
     //通信协议版本号
     public final static int SOCKET_VERSION = 0x02000000;

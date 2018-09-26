@@ -20,6 +20,7 @@ import com.runvision.thread.ListenRedInfra;
 import com.runvision.thread.SocketThread;
 import com.runvision.util.ConversionHelp;
 import com.runvision.util.DateTimeUtils;
+import com.runvision.util.DateUtils;
 import com.runvision.util.FileUtils;
 import com.runvision.util.IDUtils;
 import com.runvision.util.SPUtil;
@@ -46,6 +47,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +65,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +86,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
     private ListenOperation mlisten;
 
     // -------------视图控件------------------
-    // -----------------------------------------
     private View alert;
     private ImageView faceBmp_view, cardBmp_view, idcard_Bmp, isSuccessComper;
     private TextView card_name, card_sex, card_nation, name, year, month, day, addr, cardNumber, version;
@@ -101,24 +105,51 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
     private NetWorkStateReceiver receiver;
     private TextView socket_status;
     private ImageView goRegisterActivity;
-    //
+
     private SocketThread socketThread;
     private HeartBeatThread heartBeatThread;
+    private UIThread uithread;
     private TextView showHttpUrl;
     private ServerManager serverManager;
     private boolean HTTP_Status = false;
     private String currIp;
 
+    private Boolean SysTimeFlag = true;
+    private List<User> mList;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
+                case Const.UPDATE_DATA:
+                    DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                    /*设置删除数据操作*/
+                    String time1 = DateUtils.SGetSysTime();
+                    if ((df.format(new Date()).equals("00:00:00")) && SysTimeFlag == true) {
+                        SysTimeFlag = false;
+                        String time11 = DateUtils.timetodate(DateUtils.getTime(time1));
+                        String time22 = DateUtils.getDateBefore(new Date(), SPUtil.getInt(Const.KEY_PRESERVATION_DAY, 90));
+
+                        if (MyApplication.faceProvider.quaryUserTableRowCount("select count(id) from tUser") != 0) {
+                            mList = MyApplication.faceProvider.getAllPoints();
+                            for (int i = 0; i < mList.size(); i++) {
+                                if (TimeCompare(time11, time22, DateUtils.timetodate(String.valueOf(mList.get(i).getTime())))) {
+                                    List<User> mList1 = MyApplication.faceProvider.queryRecord("select * from tRecord where id=" + (mList.get(i).getId()));
+                                    FileUtils.deleteTempter(mList1.get(0).getTemplateImageID());
+                                    FileUtils.deleteTempter(mList1.get(0).getRecord().getSnapImageID());
+                                    MyApplication.faceProvider.deleteRecord(mList.get(i).getId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+
                 case Const.COMPER_FINISH_FLAG:
                     pro_xml.setVisibility(View.GONE);
                     ListenOperation.cleanTime();
                     showAlertDialog();
                     break;
+
                 case Const.OPEN_HOME:
                     //关闭1：N  中途的线程就算完成也不能显示
                     Const.openOneVsMore = false;
@@ -162,6 +193,10 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                     LogToFile.e("MainActivity", "收到红外感应的信息");
                     mCameraSurfView.openCamera();
                     SerialPort.openLED();
+                    if (uithread == null) {
+                        uithread = new UIThread();
+                        uithread.start();
+                    }
                     try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
@@ -370,12 +405,9 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
 
         initView();
 
-
         if (!HTTP_Status && ConversionHelp.isNetworkConnected(mContext)) {
             openHttpServer();
         }
-
-
     }
 
 
@@ -416,7 +448,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         goRegisterActivity = findViewById(R.id.goRegisterActivity);
         goRegisterActivity.setOnClickListener(this);
     }
-
 
     /**
      * 获取软件当前版本
@@ -548,6 +579,7 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
             Const.openOneVsMore = true;
         }
     };
+
     public Runnable closeTsRunnable = new Runnable() {
         @Override
         public void run() {
@@ -598,15 +630,12 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                 user.setRecord(record);
                 MyApplication.faceProvider.addRecord(user);
             }
-
             playMusic(R.raw.error);
-
         } else if (AppData.getAppData().getCompareScore() < SPUtil.getInt(Const.KEY_CARDSCORE, Const.FACE_SCORE)) {
 
             isSuccessComper.setImageResource(R.mipmap.icon_sb);
             playMusic(R.raw.error);
             str = "失败";
-
 
             //保存抓拍图片
             String snapImageID = IDUtils.genImageName();
@@ -619,7 +648,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
             User user = new User(AppData.getAppData().getName(), "无", AppData.getAppData().getSex(), 0, "无", AppData.getAppData().getCardNo(), cardImageID, DateTimeUtils.getTime());
             user.setRecord(record);
             MyApplication.faceProvider.addRecord(user);
-
         } else {
             str = "成功";
             playMusic(R.raw.success);
@@ -648,7 +676,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         LogToFile.e("比对记录", AppData.getAppData().getName() + "_" + AppData.getAppData().getSex() + "_" + AppData.getAppData().getCardNo().substring(0, 4) + "************"
                 + AppData.getAppData().getCardNo().substring(16, 18) + "_比对结果:" + str + ",比对分数:" + AppData.getAppData().getCompareScore());
 
-
         handler.postDelayed(runnable, 3000);
         handler.postDelayed(mResetRunnble, 3000);
 
@@ -662,7 +689,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                 SendData.sendComperMsgInfo(socketThread, true, Const.TYPE_CARD);
             }
         }
-
     }
 
     private Runnable mResetRunnble = new Runnable() {
@@ -711,7 +737,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         }
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -742,7 +767,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
             mPlayer = null;
         }
         Const.openOneVsMore = false;
-
         closeSocket();
     }
 
@@ -770,10 +794,17 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         flag = true;
         updateView();
         Const.openOneVsMore = true;
+
+        if (uithread == null) {
+            uithread = new UIThread();
+            uithread.start();
+        }
+
         if (mRedInfra == null) {
             mRedInfra = new ListenRedInfra(handler);
             mRedInfra.start();
         }
+
         if (mlisten == null) {
             mlisten = new ListenOperation(handler);
             mlisten.start();
@@ -811,8 +842,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         }
     }
 
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -825,7 +854,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                 break;
         }
     }
-
 
     /**
      * 打开socket连接
@@ -842,10 +870,8 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         if (!SPUtil.getString(Const.KEY_VMSIP, "").equals("") && SPUtil.getInt(Const.KEY_VMSPROT, 0) != 0 && !SPUtil.getString(Const.KEY_VMSUSERNAME, "").equals("") && !SPUtil.getString(Const.KEY_VMSPASSWORD, "").equals("")) {
             //开启socket线程
             socketReconnect(SPUtil.getString(Const.KEY_VMSIP, ""), SPUtil.getInt(Const.KEY_VMSPROT, 0));
-
         }
     }
-
 
     /**
      * socket重连接
@@ -886,9 +912,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
 
     }
 
-    /**
-     * -----------------------------------------------------------------------------------------------
-     */
     //上传的所有数据长度大小
     private int mSum = 0;
     //切割后的数据
@@ -934,11 +957,6 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         if (mImportFile == null) {
             return;
         }
-//
-//        //关闭相机流和其他线程
-//        onPause();
-//        //
-
         System.out.println("一共：" + mSum);
         //将文件数据分成三个集合
         cuttingList(mImportFile);
@@ -1024,7 +1042,30 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
         }
     }
 
-    //________Http部分
+    //获取当前系统时间
+    private Date currentTime = null;//currentTime就是系统当前时间
+    //定义时间的格式
+    private DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Date strbeginDate = null;//起始时间
+    private Date strendDate = null;//结束时间
+    private boolean range = false;
+
+    public Boolean TimeCompare(String strbeginTime, String strendTime, String currentTime1) {
+        try {
+            strbeginDate = fmt.parse(strbeginTime);//将时间转化成相同格式的Date类型
+            strendDate = fmt.parse(strendTime);
+            currentTime = fmt.parse(currentTime1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // 使用.getTime方法把时间转化成毫秒数,然后进行比较
+        if ((currentTime.getTime() - strbeginDate.getTime()) > 0 && (strendDate.getTime() - currentTime.getTime()) > 0) {
+            range = true;
+        } else {
+            range = false;
+        }
+        return range;
+    }
 
     /**
      * 打开HTTP服务器
@@ -1045,6 +1086,26 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
             serverManager.unRegister();
             serverManager.stopService();
             serverManager = null;
+        }
+    }
+
+    /**
+     * 更新UI标志线程
+     */
+    private class UIThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (true) {
+                try {
+                    Thread.sleep(250);
+                    Message msg = new Message();
+                    msg.what = Const.UPDATE_DATA;
+                    handler.sendMessage(msg);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
