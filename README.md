@@ -1,10 +1,10 @@
 # FaceAGM_1v1vN
-#####sqlite>.help 这个命令让我们看到许多命令
-#####sqlite>.exit 命令退出sqlite，返回到#提示符。
-#####sqlite>.tables 查看所有表
-#####显示字段
-#####.mode column
-#####.header on
+##### sqlite>.help 这个命令让我们看到许多命令
+##### sqlite>.exit 命令退出sqlite，返回到#提示符。
+##### sqlite>.tables 查看所有表
+##### 显示字段
+##### .mode column
+##### .header on
 
 root@rk3288:/data/data/com.runvision.faceagm_1v1vn
 hmod 777 FaceTemplate.db
