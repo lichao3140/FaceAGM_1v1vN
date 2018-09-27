@@ -527,47 +527,52 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
             FileUtils.saveFile(AppData.getAppData().getFaceBmp(), snapImageID, Const.SNAP_DIR);
             User user = MyApplication.faceProvider.getUserByUserId(AppData.getAppData().getUser().getId());
 
-            if (user.getType().equals(Type.黑名单.getDesc())) {
-                ts_xml_msg.setText("黑名单用户");
-                ts_xml.setVisibility(View.VISIBLE);
-                handler.postDelayed(closeTsRunnable, 3000);
-                return;
-            }
-            AppData.getAppData().setUser(user);
-            String sdCardDir = Environment.getExternalStorageDirectory() + "/FaceAndroid/FaceTemplate/" + user.getTemplateImageID() + ".jpg";
-            try {
-                Bitmap bmp = BitmapFactory.decodeFile(sdCardDir);
-                AppData.getAppData().setCardBmp(bmp);
-                oneVsMore_temper.setImageBitmap(bmp);
-            } catch (Exception e) {
-                oneVsMore_temper.setImageResource(R.mipmap.ic_launcher);
-            }
-            GPIOHelper.openDoor(true);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    GPIOHelper.openDoor(false);
+            if (user != null) {
+                Log.e("lichao", "===========");
+                if (user.getType().equals(Type.黑名单.getDesc())) {
+                    ts_xml_msg.setText("黑名单用户");
+                    ts_xml.setVisibility(View.VISIBLE);
+                    handler.postDelayed(closeTsRunnable, 3000);
+                    return;
                 }
-            }, SPUtil.getInt(Const.KEY_OPENDOOR, Const.CLOSE_DOOR_TIME) * 1000);
 
-            oneVsMore_userName.setText(user.getName());
-            oneVsMore_userType.setText(user.getType());
-            oneVsMore_userID.setText(user.getWordNo());
-            LogToFile.e("1:N", "1:N成功: 姓名：" + user.getName() + ",分数：" + AppData.getAppData().getCompareScore());
-            user.setTime(DateTimeUtils.getTime());
-            Record record = new Record(AppData.getAppData().getCompareScore() + "", "成功", snapImageID, "1:N");
-            user.setRecord(record);
-            MyApplication.faceProvider.addRecord(user);
+                AppData.getAppData().setUser(user);
+                String sdCardDir = Environment.getExternalStorageDirectory() + "/FaceAndroid/FaceTemplate/" + user.getTemplateImageID() + ".jpg";
+                try {
+                    Bitmap bmp = BitmapFactory.decodeFile(sdCardDir);
+                    AppData.getAppData().setCardBmp(bmp);
+                    oneVsMore_temper.setImageBitmap(bmp);
+                } catch (Exception e) {
+                    oneVsMore_temper.setImageResource(R.mipmap.ic_launcher);
+                }
+                GPIOHelper.openDoor(true);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        GPIOHelper.openDoor(false);
+                    }
+                }, SPUtil.getInt(Const.KEY_OPENDOOR, Const.CLOSE_DOOR_TIME) * 1000);
 
-            oneVsMoreView.setVisibility(View.VISIBLE);
-            playMusic(R.raw.success);
-            handler.postDelayed(oneVsMoreRunnable, 2000);
+                oneVsMore_userName.setText(user.getName());
+                oneVsMore_userType.setText(user.getType());
+                oneVsMore_userID.setText(user.getWordNo());
+                LogToFile.e("1:N", "1:N成功: 姓名：" + user.getName() + ",分数：" + AppData.getAppData().getCompareScore());
+                user.setTime(DateTimeUtils.getTime());
+                Record record = new Record(AppData.getAppData().getCompareScore() + "", "成功", snapImageID, "1:N");
+                user.setRecord(record);
+                MyApplication.faceProvider.addRecord(user);
+
+                oneVsMoreView.setVisibility(View.VISIBLE);
+                playMusic(R.raw.success);
+                handler.postDelayed(oneVsMoreRunnable, 2000);
 
 
-            if (socketThread != null) {
-                SendData.sendComperMsgInfo(socketThread, true, Const.TYPE_ONEVSMORE);
+                if (socketThread != null) {
+                    SendData.sendComperMsgInfo(socketThread, true, Const.TYPE_ONEVSMORE);
+                }
+            } else {
+                Log.e("lichao", "-------------");
             }
-
         } else {
             playMusic(R.raw.burlcard);
             ts_xml_msg.setText("请刷身份证");

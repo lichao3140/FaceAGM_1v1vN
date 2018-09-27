@@ -19,6 +19,7 @@ package com.runvision.core;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.face.sv.FaceRecognize;
 import com.face.sv.ImageUtil;
 import com.runvision.db.Admin;
 import com.runvision.db.FaceProvider;
+import com.runvision.util.CameraHelp;
 import com.runvision.util.SPUtil;
 import com.runvision.webcore.util.NetUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -43,6 +45,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Tnno Wu on 2017/4/8.
@@ -103,33 +107,6 @@ public class MyApplication extends Application {
         if (faceProvider.querAdminSize() == 0) {
             faceProvider.addAdmin(new Admin("admin", "123456"));
         }
-
-
-//        String ip = NetUtils.getIpAddress(this);
-//        if(ip==null || ip.equals("")){
-//            System.out.println("ip null");
-//
-//            SPUtil.setIp("192.168.1.3");
-//
-//            try {
-//                Thread.sleep(3*1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }else{
-//            System.out.println("ip="+ip);
-//        }
-//
-//        if(SPUtil.getString(Const.KEY_IP,"").equals("")){
-//            SPUtil.setIp(Const.IP);
-//            try {
-//                Thread.sleep(2*1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
     }
 
     private RefWatcher refWatcher;

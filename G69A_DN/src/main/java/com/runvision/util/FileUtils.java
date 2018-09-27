@@ -18,6 +18,11 @@ import java.util.List;
 
 public class FileUtils {
 
+    /**
+     * 删除模板图片
+     * @param imageID
+     * @param path
+     */
     public static void deleteTempter(String imageID, String path) {
         String sdCardDir = Environment.getExternalStorageDirectory() + "/FaceAndroid/" + path + "/" + imageID + ".jpg";
         File file = new File(sdCardDir);
@@ -34,6 +39,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 保存模板图片
+     * @param btImage
+     * @param fileName
+     * @param DirName
+     * @return
+     */
     public static File saveFile(Bitmap btImage, String fileName, String DirName) {
         if(btImage==null){
             return null;
