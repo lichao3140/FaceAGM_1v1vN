@@ -2,6 +2,8 @@ package com.runvision.core;
 
 public class Const {
     public static final String IP = "192.168.1.2";
+
+    public static boolean UPDATE_IP = false;
     /**
      * 默认开启活体
      */

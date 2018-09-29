@@ -9,8 +9,6 @@ import com.runvision.db.User;
  */
 
 public class AppData {
-
-
     private String CardNo;// 证件号
     private String Name;// 姓名
     private String sex;// 性别
@@ -23,6 +21,7 @@ public class AppData {
     private Bitmap faceBmp;
     private Bitmap cardBmp;
     private User user;
+    private String updatedeviceip;
 
     public User getUser() {
         return user;
@@ -123,5 +122,13 @@ public class AppData {
 
     public void clean() {
         appData = new AppData();
+    }
+
+    public String getUpdatedeviceip() {
+        return updatedeviceip;
+    }
+
+    public void setUpdatedeviceip(String updatedeviceip) {
+        this.updatedeviceip = updatedeviceip;
     }
 }

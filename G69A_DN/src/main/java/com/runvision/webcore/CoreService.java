@@ -35,6 +35,7 @@ import com.runvision.webcore.handler.QueryTemplate;
 import com.runvision.webcore.handler.QueryTemplateCount;
 import com.runvision.webcore.handler.QueryTemplateImage;
 import com.runvision.webcore.handler.UpdateAppConfig;
+import com.runvision.webcore.handler.UpdateDeviceIP;
 import com.runvision.webcore.handler.UpdateTemplate;
 import com.runvision.webcore.util.NetUtils;
 import com.yanzhenjie.andserver.AndServer;
@@ -80,6 +81,7 @@ public class CoreService extends Service {
                     .registerHandler("/deleteTemplate",new DeleteTemplate())
                     .registerHandler("/queryAppConfig",new QueryAppConfig())
                     .registerHandler("/updateAppConfig",new UpdateAppConfig())
+                    .registerHandler("/updatedeviceip", new UpdateDeviceIP())
                     .filter(new HttpCacheFilter())
                     .listener(mListener)
                     .build();

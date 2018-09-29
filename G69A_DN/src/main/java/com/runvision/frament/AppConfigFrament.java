@@ -1,9 +1,11 @@
 package com.runvision.frament;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.runvision.core.Const;
 import com.runvision.faceagm_1v1vn.R;
+import com.runvision.util.CameraHelp;
 import com.runvision.util.ConversionHelp;
 import com.runvision.util.SPUtil;
 import com.runvision.webcore.util.NetUtils;
@@ -252,5 +255,39 @@ public class AppConfigFrament extends Fragment implements View.OnClickListener {
             }
         }
         return false;
+    }
+
+    /**
+     * 修改IP设置
+     * @param deviceip
+     * @param context
+     * @return
+     */
+    public static int updateSetting(String deviceip,Context context) {
+        if(deviceip.equals(CameraHelp.getIpAddress())) {
+            return 1;
+        }
+        if(deviceip.equals(""))
+        {
+            return 2;
+        }
+        String[] Sip = deviceip.split("\\.");
+
+        String str = Sip[0] + "." + Sip[1] + "." + Sip[2] + ".1";
+        Log.i("aa", str + "," + deviceip);
+
+        String[] staticIP = new String[]{deviceip,
+                "255.255.255.0", str, "8.8.8.8"};
+        Intent closeIntent = new Intent("com.snstar.networkparameters.ETH_CLOSE");
+        context.sendBroadcast(closeIntent);
+
+        Intent i = new Intent("com.snstar.networkparameters.ETHSETINGS");
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("STATIC_IP", staticIP);
+        i.putExtras(bundle);
+        context.sendBroadcast(i);
+        Intent iopen = new Intent("com.snstar.networkparameters.ETH_OPEN");
+        context.sendBroadcast(iopen);
+        return 3;
     }
 }

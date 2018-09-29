@@ -10,6 +10,7 @@ import com.runvision.core.LogToFile;
 import com.runvision.core.MyApplication;
 import com.runvision.db.Record;
 import com.runvision.db.User;
+import com.runvision.frament.AppConfigFrament;
 import com.runvision.gpio.GPIOHelper;
 
 import com.runvision.myview.MyCameraSuf;
@@ -126,7 +127,21 @@ public class MainActivity extends Activity implements NetWorkStateReceiver.INetS
                 case Const.UPDATE_DATA:
                     if (!isWirePluggedIn()) {
                         showHttpUrl.setText("");
-                        Log.e("lichao", "无网线");
+                        //Log.e("lichao", "无网线");
+                    }
+
+                    /*更新IP后的web重启*/
+                    if (Const.UPDATE_IP == true) {
+                        int returndate = AppConfigFrament.updateSetting(AppData.getAppData().getUpdatedeviceip(), mContext);
+                        if (returndate == 3) {
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    openHttpServer();
+                                }
+                            }, 3000);
+                        }
+                        Const.UPDATE_IP = false;
                     }
 
                     DateFormat df = new SimpleDateFormat("HH:mm:ss");
