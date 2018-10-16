@@ -11,7 +11,9 @@ import android.util.Log;
 
 public class FaceProvider {
     private final static String TAG = "FaceProvider";
-    private final static String FACE_DB = "FaceTemplate.db";
+ //   private final static String FACE_DB = "FaceTemplate.db";
+ private final static String FACE_DB = "/mnt/sdcard/FaceAndroid/FaceTemplate.db";
+
     private FaceDataHelper faceHelper;
 
     public FaceProvider(Context context) {

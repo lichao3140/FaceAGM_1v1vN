@@ -11,9 +11,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
-
     <application
         android:name="com.runvision.core.MyApplication"
         android:allowBackup="true"
@@ -39,11 +36,11 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".MainService"></service>
+        <service android:name=".MainService" />
 
         <service android:name="com.runvision.webcore.CoreService"/>
 
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
     </application>
 
 </manifest>

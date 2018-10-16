@@ -141,7 +141,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
             case R.id.btn_openPhone:
                 openCamera();
                 break;
-
             case R.id.reg_addFace:
                 addFace();
                 break;
@@ -152,7 +151,6 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
                 break;
         }
     }
-
 
     private void openCamera() {
         if (!Const.is_regFace) {
@@ -250,14 +248,14 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
         if (BRG24Kj == null) {
             MyApplication.faceProvider.deleteUserById(id);
             FileUtils.deleteTempter(imageID, "FaceTemplate");
-            Toast.makeText(mContext, "添加失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "添加失败0:", Toast.LENGTH_SHORT).show();
             return;
         }
         FaceInfo faceInfoKj = MyApplication.mDetect.getFacePositionScaleFromGray(BRG24Kj, reg_bmp.getWidth(), reg_bmp.getHeight(), 5);
         if (faceInfoKj.getRet() != 1) {
             MyApplication.faceProvider.deleteUserById(id);
             FileUtils.deleteTempter(imageID, "FaceTemplate");
-            Toast.makeText(mContext, "添加失败:" + faceInfoKj.getRet(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "添加失败1:" + faceInfoKj.getRet(), Toast.LENGTH_SHORT).show();
             return;
         }
         int ret = MyApplication.mRecognize.registerFaceFeature(id, BRG24Kj, reg_bmp.getWidth(), reg_bmp.getHeight(), faceInfoKj.getFacePosData(0));
@@ -266,7 +264,7 @@ public class FaceRegisterFrament extends Fragment implements View.OnClickListene
         } else {
             MyApplication.faceProvider.deleteUserById(id);
             FileUtils.deleteTempter(imageID, "FaceTemplate");
-            Toast.makeText(mContext, "添加失败" + ret, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "添加失败2:" + ret, Toast.LENGTH_SHORT).show();
             return;
         }
     }

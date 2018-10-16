@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 
 import com.face.sv.FaceAngle;
 import com.face.sv.FaceInfo;
@@ -112,6 +113,7 @@ public class OneVSMoreTask extends AsyncTask<Void, Void, Void> {
         int result[] = MyApplication.mRecognize.recognizeFaceMore(BRG24Kj, Const.PRE_WIDTH, Const.PRE_HEIGTH, faceInfoKj.getFacePosData(0));
 
 
+        Log.i("Gavin_test","result[0]:"+result[0]+"result[1]:"+result[1]);
         System.out.println(result[1]);
 
 

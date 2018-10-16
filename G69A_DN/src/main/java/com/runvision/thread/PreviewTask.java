@@ -25,8 +25,6 @@ public class PreviewTask extends AsyncTask<Void, Rect, Void> {
         data = MyCameraSuf.getCameraData();
     }
 
-
-
     @Override
     protected Void doInBackground(Void... arg0) {
         byte[] BRG24Kj = null;
@@ -44,8 +42,6 @@ public class PreviewTask extends AsyncTask<Void, Rect, Void> {
             faceInfoKj = null;
             publishProgress(new Rect(0, 0, 0, 0));
         }
-
-
         return null;
     }
 
